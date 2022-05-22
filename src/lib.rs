@@ -1,3 +1,9 @@
+pub use libusbk_sys as ffi;
+
+pub use crate::version::{LibraryVersion, version};
+
+mod version;
+
 #[cfg(test)]
 mod tests {
     #[test]
