@@ -1,0 +1,3 @@
+[submodule "libusbK"]
+	path = libusbK-sys/libusbK
+	url = https://github.com/mcuee/libusbk.git
