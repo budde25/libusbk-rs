@@ -9,4 +9,6 @@ edition = "2021"
 members = ["libusbk-sys"]
 
 [dependencies]
+winapi = {version =  "0.3.9", features = ["errhandlingapi"]}
 libusbk-sys = { path = "libusbk-sys", version = "0.1.0"}
+

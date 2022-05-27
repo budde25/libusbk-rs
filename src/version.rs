@@ -21,11 +21,11 @@ impl LibraryVersion {
 
     pub fn minor(&self) -> i32 {
         self.inner.Minor
-    } 
+    }
 
     pub fn micro(&self) -> i32 {
         self.inner.Micro
-    } 
+    }
 
     pub fn nano(&self) -> i32 {
         self.inner.Nano
@@ -46,7 +46,7 @@ impl fmt::Debug for LibraryVersion {
 }
 
 impl Default for LibraryVersion {
-   fn default() -> Self {
+    fn default() -> Self {
         Self::new()
     }
 }

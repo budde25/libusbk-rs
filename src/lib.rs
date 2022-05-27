@@ -1,14 +1,26 @@
 pub use libusbk_sys as ffi;
 
-pub use crate::version::{LibraryVersion, version};
+pub use crate::device_handle::DeviceHandle;
+pub use crate::device_list::DeviceList;
+pub use crate::error::Result;
+pub use crate::version::{version, LibraryVersion};
 
+//mod context;
+mod device;
+mod device_handle;
+mod device_list;
+mod error;
 mod version;
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
-    fn it_works() {
-        let result = 2 + 2;
-        assert_eq!(result, 4);
+    fn basic_list() {
+        let dl = DeviceList::new().unwrap();
+        let _count = dl.length().unwrap();
+        // let device = dl.find_with_vid_and_pid(0x0955, 0x7321).unwrap();
+        // dbg!(device);
     }
 }
