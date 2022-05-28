@@ -21,6 +21,7 @@ impl Device {
         let mut handle = mem::MaybeUninit::<*mut c_void>::uninit();
 
         let mut dev: KUSB_DRIVER_API = unsafe { std::mem::zeroed() };
+        // TODO: this may not be desirable always
         try_unsafe!(LibK_LoadDriverAPI(&mut dev, self.driver_id()));
 
         try_unsafe!(dev.Init.unwrap()(handle.as_mut_ptr(), self.0));
