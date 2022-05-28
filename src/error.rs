@@ -20,14 +20,13 @@ pub(crate) fn from_libusbk(err: u32) -> Error {
 macro_rules! try_unsafe {
     ($x:expr) => {
         match unsafe { $x } {
-            1 => (),
             0 => {
                 use winapi::um::errhandlingapi::GetLastError;
 
                 let err: u32 = unsafe { GetLastError() };
                 return Err($crate::error::from_libusbk(err));
             }
-            _ => unreachable!(),
+            _ => (),
         }
     };
 }

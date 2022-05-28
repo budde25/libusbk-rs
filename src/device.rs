@@ -4,7 +4,7 @@ use std::ffi::c_void;
 use std::mem;
 use std::ptr::NonNull;
 
-use libusbk_sys::{UsbK_Init, KLST_DEVINFO};
+use libusbk_sys::{LibK_LoadDriverAPI, UsbK_Init, KLST_DEVINFO, KUSB_DRIVER_API, _KUSB_DRIVER_API};
 
 use crate::error::try_unsafe;
 use crate::DeviceHandle;
@@ -20,10 +20,14 @@ impl Device {
     pub fn open(&self) -> crate::Result<DeviceHandle> {
         let mut handle = mem::MaybeUninit::<*mut c_void>::uninit();
 
-        try_unsafe!(UsbK_Init(handle.as_mut_ptr(), self.0));
+        let mut dev: KUSB_DRIVER_API = unsafe { std::mem::zeroed() };
+        try_unsafe!(LibK_LoadDriverAPI(&mut dev, self.driver_id()));
+
+        try_unsafe!(dev.Init.unwrap()(handle.as_mut_ptr(), self.0));
 
         let ptr = unsafe { NonNull::new(handle.assume_init()).unwrap() };
         Ok(DeviceHandle {
+            dev,
             driver_id: self.driver_id(),
             handle: Some(ptr),
             claimed_interface: HashSet::new(),
