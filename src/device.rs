@@ -24,6 +24,7 @@ impl Device {
 
         let ptr = unsafe { NonNull::new(handle.assume_init()).unwrap() };
         Ok(DeviceHandle {
+            driver_id: self.driver_id(),
             handle: Some(ptr),
             claimed_interface: HashSet::new(),
         })
