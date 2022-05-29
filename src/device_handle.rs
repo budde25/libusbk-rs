@@ -107,11 +107,11 @@ impl From<i32> for DriverId {
 impl Display for DriverId {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            DriverId::LibUsbK => writeln!(f, "libusbK"),
-            DriverId::LibUsb0 => writeln!(f, "libusb0"),
-            DriverId::WinUsb => writeln!(f, "winusb"),
-            DriverId::LibUsb0Filter => writeln!(f, "libusb0 filter"),
-            DriverId::Count => writeln!(f, "count"),
+            DriverId::LibUsbK => write!(f, "libusbK"),
+            DriverId::LibUsb0 => write!(f, "libusb0"),
+            DriverId::WinUsb => write!(f, "winusb"),
+            DriverId::LibUsb0Filter => write!(f, "libusb0 filter"),
+            DriverId::Count => write!(f, "count"),
         }
     }
 }
