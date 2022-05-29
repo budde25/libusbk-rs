@@ -1,8 +1,10 @@
 pub use libusbk_sys as ffi;
 
+pub use crate::device::Device;
 pub use crate::device_handle::DeviceHandle;
 pub use crate::device_list::DeviceList;
 pub use crate::error::Result;
+pub use crate::hotplug::{has_hotplug, Hotplug, HotplugBuilder};
 pub use crate::version::{version, LibraryVersion};
 
 //mod context;
@@ -10,6 +12,7 @@ mod device;
 mod device_handle;
 mod device_list;
 mod error;
+mod hotplug;
 mod version;
 
 #[cfg(test)]

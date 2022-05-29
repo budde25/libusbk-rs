@@ -1,7 +1,4 @@
-use libusbk_sys::{
-    UsbK_ClaimInterface, UsbK_Free, UsbK_ReadPipe, UsbK_ReleaseInterface, UsbK_WritePipe,
-    KUSB_DRIVER_API,
-};
+use libusbk_sys::{UsbK_ReleaseInterface, KUSB_DRIVER_API};
 use std::collections::HashSet;
 use std::ffi::c_void;
 use std::ptr::NonNull;
@@ -11,6 +8,8 @@ use crate::Result;
 
 type UsbkHandle = NonNull<c_void>;
 type Interface = (u8, bool);
+
+unsafe impl Send for DeviceHandle {}
 
 #[derive(Debug)]
 pub struct DeviceHandle {
@@ -36,11 +35,6 @@ impl DeviceHandle {
     pub fn driver_id(&self) -> DriverId {
         DriverId::from(self.driver_id)
     }
-
-    // /// Initialize a driver api set
-    // pub fn load_driver_api(&self) -> Result<()> {
-    //     try_unsafe!(LibK_LoadDriverAPI(DriverAPI, self.driver_id))
-    // }
 
     pub fn read_pipe(&mut self, pipe_id: u8, buffer: &mut [u8]) -> crate::Result<u32> {
         let mut transferred: u32 = 0;

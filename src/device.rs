@@ -4,7 +4,7 @@ use std::ffi::c_void;
 use std::mem;
 use std::ptr::NonNull;
 
-use libusbk_sys::{LibK_LoadDriverAPI, UsbK_Init, KLST_DEVINFO, KUSB_DRIVER_API, _KUSB_DRIVER_API};
+use libusbk_sys::{LibK_LoadDriverAPI, KLST_DEVINFO, KUSB_DRIVER_API};
 
 use crate::error::try_unsafe;
 use crate::DeviceHandle;
@@ -119,6 +119,18 @@ impl Device {
         }
     }
 
+    pub fn vendor_id(&self) -> u16 {
+        let index = self.device_id().find("VID_").unwrap() + 4;
+        let sub_str = &self.device_id()[index..index + 4];
+        u16::from_str_radix(sub_str, 16).unwrap()
+    }
+
+    pub fn product_id(&self) -> u16 {
+        let index = self.device_id().find("PID_").unwrap() + 4;
+        let sub_str = &self.device_id()[index..index + 4];
+        u16::from_str_radix(sub_str, 16).unwrap()
+    }
+
     pub fn lusb0_filter_index(&self) -> i32 {
         self.inner().LUsb0FilterIndex
     }
@@ -148,6 +160,8 @@ impl Device {
 impl fmt::Debug for Device {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("Device")
+            .field("product_id", &self.product_id())
+            .field("vendor_id", &self.vendor_id())
             .field("driver_id", &self.driver_id())
             .field("device_interface_guid", &self.device_interface_guid())
             .field("device_id", &self.device_id())

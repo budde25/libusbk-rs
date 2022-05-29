@@ -31,6 +31,9 @@ fn main() {
         .allowlist_function("IsoK_.*")
         .allowlist_function("IsochK_.*")
         .allowlist_function("LUsb0_.*")
+        .allowlist_function("HotK_.*")
+        // types
+        .allowlist_type("KHOT_.*")
         // Tell cargo to invalidate the built crate whenever any of the
         // included header files changed.
         .parse_callbacks(Box::new(bindgen::CargoCallbacks))
