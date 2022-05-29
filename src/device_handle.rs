@@ -1,6 +1,7 @@
 use libusbk_sys::{UsbK_ReleaseInterface, KUSB_DRIVER_API};
 use std::collections::HashSet;
 use std::ffi::c_void;
+use std::fmt::Display;
 use std::ptr::NonNull;
 
 use crate::error::try_unsafe;
@@ -99,6 +100,18 @@ impl From<i32> for DriverId {
             3 => LibUsb0Filter,
             4 => Count,
             _ => panic!("impossible"),
+        }
+    }
+}
+
+impl Display for DriverId {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DriverId::LibUsbK => writeln!(f, "libusbK"),
+            DriverId::LibUsb0 => writeln!(f, "libusb0"),
+            DriverId::WinUsb => writeln!(f, "winusb"),
+            DriverId::LibUsb0Filter => writeln!(f, "libusb0 filter"),
+            DriverId::Count => writeln!(f, "count"),
         }
     }
 }
