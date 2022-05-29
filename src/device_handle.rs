@@ -79,7 +79,7 @@ impl Drop for DeviceHandle {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(i32)]
 pub enum DriverId {
     LibUsbK = 0,

@@ -1,3 +1,4 @@
+use std::fmt::Display;
 use std::result;
 
 /// A result of a function that may return a `Error`.
@@ -6,13 +7,19 @@ pub type Result<T> = result::Result<T, Error>;
 /// Errors returned by the `libusb` library.
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub enum Error {
-    Unknown(u32),
+    Code(u32),
+}
+
+impl Display for Error {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        writeln!(f, "libusbK error: {}", self)
+    }
 }
 
 #[doc(hidden)]
 pub(crate) fn from_libusbk(err: u32) -> Error {
     match err {
-        i => Error::Unknown(i),
+        i => Error::Code(i),
     }
 }
 

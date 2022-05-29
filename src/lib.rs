@@ -1,9 +1,9 @@
 pub use libusbk_sys as ffi;
 
 pub use crate::device::Device;
-pub use crate::device_handle::DeviceHandle;
+pub use crate::device_handle::{DeviceHandle, DriverId};
 pub use crate::device_list::DeviceList;
-pub use crate::error::Result;
+pub use crate::error::{Error, Result};
 pub use crate::hotplug::{has_hotplug, Hotplug, HotplugBuilder};
 pub use crate::version::{version, LibraryVersion};
 
