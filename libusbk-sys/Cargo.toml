@@ -2,10 +2,11 @@
 name = "libusbk-sys"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
+authors = ["Ethan Budd <budde25@protonmail.com"]
+homepage = "https://github.com/budde25/libusbk-rs"
+repository = "https://github.com/budde25/libusbk-rs.git"
+readme = "README.md"
+keywords = ["usb", "libusbk", "hardware", "bindings"]
 
 [build-dependencies]
 bindgen = "0.59.2"

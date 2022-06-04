@@ -9,13 +9,14 @@ fn main() {
     println!("cargo:rustc-link-search=libusbK");
     println!("cargo:rustc-link-search=libusbK/libusbK/src/lib");
 
-    // Tell cargo to tell rustc to link the system bzip2
-    // shared library.
-    println!("cargo:rustc-link-search=setupapi");
-
     // Tell cargo to invalidate the built crate whenever the wrapper changes
     println!("cargo:rerun-if-changed=wrapper.h");
 
+    // generate_bindings();
+    make_source();
+}
+
+fn generate_bindings() {
     // The bindgen::Builder is the main entry point
     // to bindgen, and lets you build up options for
     // the resulting bindings.
@@ -50,8 +51,6 @@ fn main() {
     bindings
         .write_to_file(out_path.join("bindings.rs"))
         .expect("Couldn't write bindings!");
-
-    make_source();
 }
 
 fn make_source() {

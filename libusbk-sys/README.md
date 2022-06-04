@@ -1,1 +1,1 @@
-# libusbK-sys
+# libusbk-sys
