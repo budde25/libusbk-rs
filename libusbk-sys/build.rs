@@ -12,46 +12,67 @@ fn main() {
     // Tell cargo to invalidate the built crate whenever the wrapper changes
     println!("cargo:rerun-if-changed=wrapper.h");
 
-    // generate_bindings();
-    make_source();
+    let _statik = {
+        std::env::var("CARGO_CFG_TARGET_FEATURE")
+            .map(|s| s.contains("crt-static"))
+            .unwrap_or_default()
+    };
+
+    //generate_bindings();
+
+    if cfg!(feature = "vendored")  {
+        make_source();
+    }
 }
 
-fn generate_bindings() {
-    // The bindgen::Builder is the main entry point
-    // to bindgen, and lets you build up options for
-    // the resulting bindings.
-    let bindings = bindgen::Builder::default()
-        // The input header we would like to generate
-        // bindings for.
-        .header("wrapper.h")
-        .allowlist_function("LibK_.*")
-        .allowlist_function("LstK_.*")
-        .allowlist_function("OvlK_.*")
-        .allowlist_function("UsbK_.*")
-        .allowlist_function("StmK_.*")
-        .allowlist_function("IsoK_.*")
-        .allowlist_function("IsochK_.*")
-        .allowlist_function("LUsb0_.*")
-        .allowlist_function("HotK_.*")
-        // types
-        .allowlist_type("KHOT_.*")
-        // Tell cargo to invalidate the built crate whenever any of the
-        // included header files changed.
-        .parse_callbacks(Box::new(bindgen::CargoCallbacks))
-        .generate_comments(false) // comments are messed up
-        .layout_tests(false)
-        .derive_default(true)
-        // Finish the builder and generate the bindings.
-        .generate()
-        // Unwrap the Result and panic on failure.
-        .expect("Unable to generate bindings");
-
-    // Write the bindings to the $OUT_DIR/bindings.rs file.
-    let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
-    bindings
-        .write_to_file(out_path.join("bindings.rs"))
-        .expect("Couldn't write bindings!");
+#[allow(unused)]
+fn find_libusb_pkg(_statik: bool) -> bool {
+    match vcpkg::Config::new().find_package("libusbk") {
+        Ok(_) => true,
+        Err(e) => {
+            println!("cargo:warning=Can't find libusb pkg: {:?}", e);
+            false
+        }
+    }
 }
+
+
+// fn generate_bindings() {
+//     // The bindgen::Builder is the main entry point
+//     // to bindgen, and lets you build up options for
+//     // the resulting bindings.
+//     let bindings = bindgen::Builder::default()
+//         // The input header we would like to generate
+//         // bindings for.
+//         .header("wrapper.h")
+//         .allowlist_function("LibK_.*")
+//         .allowlist_function("LstK_.*")
+//         .allowlist_function("OvlK_.*")
+//         .allowlist_function("UsbK_.*")
+//         .allowlist_function("StmK_.*")
+//         .allowlist_function("IsoK_.*")
+//         .allowlist_function("IsochK_.*")
+//         .allowlist_function("LUsb0_.*")
+//         .allowlist_function("HotK_.*")
+//         // types
+//         .allowlist_type("KHOT_.*")
+//         // Tell cargo to invalidate the built crate whenever any of the
+//         // included header files changed.
+//         .parse_callbacks(Box::new(bindgen::CargoCallbacks))
+//         .generate_comments(false) // comments are messed up
+//         .layout_tests(false)
+//         .derive_default(true)
+//         // Finish the builder and generate the bindings.
+//         .generate()
+//         // Unwrap the Result and panic on failure.
+//         .expect("Unable to generate bindings");
+
+//     // Write the bindings to the $OUT_DIR/bindings.rs file.
+//     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
+//     bindings
+//         .write_to_file(out_path.join("bindings.rs"))
+//         .expect("Couldn't write bindings!");
+// }
 
 fn make_source() {
     let libusbk_source = PathBuf::from("libusbK");

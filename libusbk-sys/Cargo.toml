@@ -6,8 +6,14 @@ authors = ["Ethan Budd <budde25@protonmail.com"]
 homepage = "https://github.com/budde25/libusbk-rs"
 repository = "https://github.com/budde25/libusbk-rs.git"
 readme = "README.md"
+license = "MIT"
+description = "Rust Windows library for accessing USB devices via libusbK"
 keywords = ["usb", "libusbk", "hardware", "bindings"]
 
 [build-dependencies]
-bindgen = "0.59.2"
+#bindgen = "0.60.1"
 cc = "1.0.73"
+vcpkg = "0.2.15"
+
+[features]
+vendored = []
