@@ -3,6 +3,10 @@ use std::fs;
 use std::path::PathBuf;
 
 fn main() {
+    // docs.rs doesn't need to link
+    if std::env::var("DOCS_RS").is_ok() {
+        return;
+    }
     // Tell cargo to look for shared libraries in the specified directory
     println!("cargo:include=libusbK/src/lib");
 
@@ -20,7 +24,7 @@ fn main() {
 
     //generate_bindings();
 
-    if cfg!(feature = "vendored")  {
+    if cfg!(feature = "vendored") {
         make_source();
     }
 }
@@ -35,7 +39,6 @@ fn find_libusb_pkg(_statik: bool) -> bool {
         }
     }
 }
-
 
 // fn generate_bindings() {
 //     // The bindgen::Builder is the main entry point

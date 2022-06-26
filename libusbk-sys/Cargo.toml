@@ -1,6 +1,6 @@
 [package]
 name = "libusbk-sys"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Ethan Budd <budde25@protonmail.com"]
 homepage = "https://github.com/budde25/libusbk-rs"
@@ -9,6 +9,7 @@ readme = "README.md"
 license = "MIT"
 description = "Rust Windows library for accessing USB devices via libusbK"
 keywords = ["usb", "libusbk", "hardware", "bindings"]
+categories = ["hardware-support"]
 
 [build-dependencies]
 #bindgen = "0.60.1"
