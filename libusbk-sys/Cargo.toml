@@ -12,6 +12,10 @@ keywords = ["usb", "libusbk", "hardware", "bindings"]
 categories = ["hardware-support"]
 links = "libusbk"
 
+[package.metadata.docs.rs]
+default-target = "x86_64-pc-windows-msvc"
+targets = ["aarch64-pc-windows-msvc", "i686-pc-windows-msvc", "x86_64-pc-windows-msvc"]
+
 [build-dependencies]
 #bindgen = "0.60.1"
 cc = "1.0.73"
