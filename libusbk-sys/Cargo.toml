@@ -1,6 +1,6 @@
 [package]
 name = "libusbk-sys"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2021"
 authors = ["Ethan Budd <budde25@protonmail.com"]
 homepage = "https://github.com/budde25/libusbk-rs"
