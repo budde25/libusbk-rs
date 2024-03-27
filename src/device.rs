@@ -14,7 +14,11 @@ const STRING_LEN: usize = 256;
 // wrapper type
 // TODO not pub
 #[repr(transparent)]
+#[derive(Clone)]
 pub struct Device(pub(crate) *mut KLST_DEVINFO);
+
+unsafe impl Send for Device {}
+unsafe impl Sync for Device {}
 
 impl Device {
     pub fn open(&self) -> crate::Result<DeviceHandle> {
