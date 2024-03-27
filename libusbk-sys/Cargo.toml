@@ -17,8 +17,8 @@ default-target = "x86_64-pc-windows-msvc"
 targets = ["aarch64-pc-windows-msvc", "i686-pc-windows-msvc", "x86_64-pc-windows-msvc"]
 
 [build-dependencies]
-#bindgen = "0.60.1"
-cc = "1.0.73"
+# bindgen = "0.69"
+cc = "1"
 vcpkg = "0.2.15"
 
 [features]
